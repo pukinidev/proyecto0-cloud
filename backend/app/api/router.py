@@ -7,3 +7,6 @@ router.include_router(user_route.router, prefix="/user", tags=["user"])
 router.include_router(task_route.router, prefix="/task", tags=["task"])
 router.include_router(category_route.router, prefix="/category", tags=["category"])
 
+@router.get("/")
+def read_root():
+    return {"Hello": "World"}
