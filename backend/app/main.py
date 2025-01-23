@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from app.db.base import Base
-from app.db.config import engine
+from app.db.session import engine
 from app.routes import user_route, task_route, category_route, auth_route
 
 app = FastAPI(

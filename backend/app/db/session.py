@@ -1,11 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.db.settings import settings
 
-DATABASE_URL_SQLITE = "sqlite:///./db.db"
-
-DATABASE_URL = "postgresql://postgres:postgres@database:5432/postgres"
-
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(settings.DB_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():
