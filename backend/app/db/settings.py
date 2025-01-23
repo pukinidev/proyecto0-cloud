@@ -13,4 +13,3 @@ class Settings:
     DB_URL_SQLITE = "sqlite:///./db.db"
     
 settings = Settings()
-    
