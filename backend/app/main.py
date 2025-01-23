@@ -1,13 +1,28 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from app.db.base import Base
 from app.db.config import engine
-from app.api.router import router
+from app.routes import user_route, task_route, category_route
 
-app = FastAPI()
+app = FastAPI(
+    title="Tasks API",
+    description="A simple task manager API",
+    version="0.1",
+    docs_url="/",
+    redoc_url=None
+)
 
-app.include_router(router, prefix="/api")
+# Create the database tables
+
+Base.metadata.create_all(bind=engine)
+
+# Create the routes of the app
+
+app.include_router(user_route.router, prefix="/user")
+app.include_router(task_route.router, prefix="/task")
+app.include_router(category_route.router, prefix="/category")
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return RedirectResponse(url="/docs")
 
