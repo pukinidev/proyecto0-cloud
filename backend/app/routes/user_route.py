@@ -1,12 +1,10 @@
 from fastapi import APIRouter
-from jwt import InvalidTokenError
-import jwt
 from datetime import timedelta
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from app.models import user
-from app.schemas.token_schema import Token, TokenData
+from app.schemas.token_schema import Token
 from app.services.auth_service import create_access_token, get_current_active_user
 from app.services.user_service import authenticate_user, create_user, get_user
 from app.core.settings import settings
