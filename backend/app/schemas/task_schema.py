@@ -9,7 +9,7 @@ class TaskSchema(BaseModel):
     creation_date: datetime
     finish_date: datetime
     status: Status
-    user_id: int
+    category_id: int
     
     class Config:
         from_attributes = True

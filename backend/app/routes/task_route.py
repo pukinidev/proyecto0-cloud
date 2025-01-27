@@ -1,12 +1,21 @@
+from typing import Annotated
 from fastapi import APIRouter
 from app.models import task
 from app.db.session import engine
+from app.schemas.task_schema import TaskSchema
+from fastapi import Depends
+from sqlalchemy.orm import Session
+from app.db.session import get_db
+from app.schemas.user_schema import UserSchema
+from app.services.auth_service import get_current_active_user
+from app.services.task_service import create
 
 task = APIRouter()
 
 @task.post("/")
-async def create_task():
-    return {"message": "Task created successfully"}
+async def create_task(task: TaskSchema, current_user: Annotated[UserSchema, Depends(get_current_active_user)],db: Session = Depends(get_db) ):
+    task = create(db, task, current_user.username)
+    return task
 
 @task.get("/{user_id}/tasks")
 async def get_tasks(user_id: int):
