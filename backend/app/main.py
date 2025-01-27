@@ -19,12 +19,12 @@ ModelBase.metadata.create_all(bind=engine)
 
 # Create the routes of the app
 
-app.include_router(user_route.user, prefix="/user",
+app.include_router(user_route.user, prefix="/users",
                    tags=["User"])
 
-app.include_router(task_route.task, prefix="/task", tags=["Task"])
+app.include_router(task_route.task, prefix="/tasks", tags=["Task"])
 app.include_router(category_route.category,
-                   prefix="/category", tags=["Category"])
+                   prefix="/categories", tags=["Category"])
 
 
 # Add CORS middleware

@@ -14,3 +14,21 @@ def create(db: Session, task: TaskSchema, username: str):
     db.commit()
     db.refresh(db_task)
     return db_task
+
+def get_tasks_by_user_id(db: Session, user_id: int):
+    return db.query(Task).filter(Task.user_id == user_id).all()
+
+
+def update(db: Session, task_id: int, task: TaskSchema):
+    db_task = db.query(Task).filter(Task.id == task_id).first()
+    db_task.title = task.title
+    db_task.description = task.description
+    db.commit()
+    db.refresh(db_task)
+    return db_task
+
+def delete(db: Session, task_id: int):
+    task = db.query(Task).filter(Task.id == task_id).first()
+    db.delete(task)
+    db.commit()
+    return task

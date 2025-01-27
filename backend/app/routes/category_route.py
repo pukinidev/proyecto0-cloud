@@ -14,7 +14,11 @@ category = APIRouter()
 @category.post("/")
 async def create_category(category: CategorySchema,current_user: Annotated[UserSchema, Depends(get_current_active_user)], db: Session = Depends(get_db)):
     category = create(db, category)
-    return category
+    return {
+        "message": "Category created successfully",
+        "category": category.name,
+        "user": current_user.username
+    }
 
 
 @category.get("/")
@@ -24,11 +28,12 @@ async def get_categories(db: Session = Depends(get_db)):
 
 
 @category.delete("/{category_id}")
-async def delete_category(category_id: int,  db: Session = Depends(get_db)):
+async def delete_category(category_id: int, current_user: Annotated[UserSchema, Depends(get_current_active_user)] ,db: Session = Depends(get_db)):
     deleted_category = delete(db, category_id=category_id)
     return {
         "message": "Category deleted successfully",
-        "category": deleted_category
+        "category": deleted_category.name,
+        "user": current_user.username
     }
 
 
