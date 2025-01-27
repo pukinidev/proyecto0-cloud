@@ -13,9 +13,13 @@ from app.services.task_service import create
 task = APIRouter()
 
 @task.post("/")
-async def create_task(task: TaskSchema, current_user: Annotated[UserSchema, Depends(get_current_active_user)],db: Session = Depends(get_db) ):
+async def create_task(task: TaskSchema, current_user: Annotated[UserSchema, Depends(get_current_active_user)],db: Session = Depends(get_db)):
     task = create(db, task, current_user.username)
-    return task
+    return {
+        "message": "Task created successfully",
+        "task": task,
+        "user": current_user.username
+    }
 
 @task.get("/{user_id}/tasks")
 async def get_tasks(user_id: int):
