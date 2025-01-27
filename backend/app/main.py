@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
-from app.db.base import Base
+from app.models.base import ModelBase
 from app.db.session import engine
 from app.routes import user_route, task_route, category_route
 
@@ -15,8 +15,7 @@ app = FastAPI(
 
 # Create the database tables
 
-Base.metadata.create_all(bind=engine)
-
+ModelBase.metadata.create_all(bind=engine)
 
 # Create the routes of the app
 

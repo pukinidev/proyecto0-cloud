@@ -1,7 +1,9 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from app.db.base import Base
+from typing import List
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from app.models.task import Task
+from .base import ModelBase
 
-class User(Base):
+class User(ModelBase):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -9,4 +11,5 @@ class User(Base):
     password: Mapped[str]
     profile_picture: Mapped[str] = mapped_column(default="default.jpg")
     disabled: Mapped[bool] = mapped_column(default=False)
+    tasks: Mapped[List["Task"]] = relationship()
     

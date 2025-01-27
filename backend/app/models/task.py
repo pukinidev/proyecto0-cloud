@@ -1,7 +1,7 @@
 import enum
-from sqlalchemy.orm import Mapped, mapped_column, relationship, DeclarativeBase
-from sqlalchemy import ForeignKey, Integer
-from app.db.base import Base
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import ForeignKey
+from .base import ModelBase
 from datetime import datetime
 
 class Status(enum.Enum):
@@ -10,7 +10,7 @@ class Status(enum.Enum):
     in_progress = "in_progress"
     completed = "completed"
 
-class Task(Base):
+class Task(ModelBase):
     __tablename__ = "task"
     
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -20,5 +20,7 @@ class Task(Base):
     finish_date: Mapped[datetime]
     status: Mapped[Status] = mapped_column(default=Status.pending)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    category_id: Mapped[int] = mapped_column(ForeignKey("category.id"))
+ 
     
     
