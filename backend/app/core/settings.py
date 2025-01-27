@@ -11,5 +11,8 @@ class Settings:
     DB_NAME = os.getenv('DB_NAME', 'postgres')
     DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     DB_URL_SQLITE = "sqlite:///./db.db"
+    SECRET_KEY = os.getenv('SECRET_KEY', 'my_secret_key')
+    ALGORITHM = os.getenv('ALGORITHM', 'HS256')
+    ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES', 30)
     
 settings = Settings()

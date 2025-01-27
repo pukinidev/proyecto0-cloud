@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from fastapi.security import OAuth2PasswordBearer
 from app.db.base import Base
 from app.db.session import engine
 from app.routes import user_route, task_route, category_route
@@ -16,6 +17,7 @@ app = FastAPI(
 
 Base.metadata.create_all(bind=engine)
 
+
 # Create the routes of the app
 
 app.include_router(user_route.user, prefix="/user",
@@ -24,6 +26,7 @@ app.include_router(user_route.user, prefix="/user",
 app.include_router(task_route.task, prefix="/task", tags=["Task"])
 app.include_router(category_route.category,
                    prefix="/category", tags=["Category"])
+
 
 # Add CORS middleware
 

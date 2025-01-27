@@ -3,12 +3,11 @@ from pydantic import BaseModel
 class UserSchema(BaseModel):
     username: str
     password: str
-    profile_picture: str
+    profile_picture: str  | None = None
+    disabled: bool | None = None
     
     class Config:
-        orm_mode = True
+        from_attributes = True
         
-        
-        
-        
+
 
