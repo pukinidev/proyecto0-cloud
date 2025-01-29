@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 from app.models import task
-from app.schemas.task_schema import TaskSchema
+from app.schemas.task_schema import TaskSchema, TaskUpdateSchema
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.services.auth_service import auth_dependency
-from app.services.task_service import create, get_tasks_by_user_id, get_task_by_id, delete
+from app.services.task_service import create, get_tasks_by_user_id, get_task_by_id, delete, update
 
 task = APIRouter()
 
@@ -32,6 +32,14 @@ async def get_task(task_id: int, db: Session = Depends(get_db)):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
+
+@task.put("/{task_id}")
+async def update_task(task_id: int, task: TaskUpdateSchema, db: Session = Depends(get_db)):
+    task = update(db, task_id, task)
+    return {
+        "message": "Task updated successfully",
+        "task": task
+    }
 
 
 @task.delete("/{task_id}")

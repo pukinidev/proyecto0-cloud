@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.schemas.task_schema import TaskSchema
+from app.schemas.task_schema import TaskSchema, TaskUpdateSchema
 from app.models.task import Task
 
 
@@ -19,6 +19,13 @@ def get_tasks_by_user_id(db: Session, user_id: int):
 def get_task_by_id(db: Session, task_id: int):
     return db.query(Task).filter(Task.id == task_id).first()
 
+def update(db: Session, task_id: int, task: TaskUpdateSchema):
+    db_task = db.query(Task).filter(Task.id == task_id).first()
+    db_task.title = task.title
+    db_task.status = task.status
+    db.commit()
+    db.refresh(db_task)
+    return db_task
 
 def delete(db: Session, task_id: int):
     task = db.query(Task).filter(Task.id == task_id).first()

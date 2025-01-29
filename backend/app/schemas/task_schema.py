@@ -13,7 +13,10 @@ class TaskSchema(BaseModel):
 
     class Config:
         from_attributes = True
-
+        
+class TaskUpdateSchema(BaseModel):
+    title: str
+    status: Status
 
 class TaskDB(TaskSchema):
     id: int
