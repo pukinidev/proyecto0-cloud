@@ -34,11 +34,12 @@ async def get_task(task_id: int, db: Session = Depends(get_db)):
     return task
 
 @task.put("/{task_id}")
-async def update_task(task_id: int, task: TaskUpdateSchema, db: Session = Depends(get_db)):
+async def update_task(task_id: int, task: TaskUpdateSchema,current_user: auth_dependency, db: Session = Depends(get_db)):
     task = update(db, task_id, task)
     return {
         "message": "Task updated successfully",
-        "task": task
+        "task": task,
+        "user": current_user.username
     }
 
 
