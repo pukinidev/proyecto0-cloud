@@ -1,4 +1,3 @@
-import enum
 from pydantic import BaseModel
 from datetime import datetime
 from app.models.task import Status
