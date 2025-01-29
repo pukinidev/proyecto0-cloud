@@ -11,6 +11,6 @@ const NextThemesProvider = dynamic(
 	}
 )
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+export function ThemeProvider({ children, ...props }: Readonly<ThemeProviderProps>) {
 	return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
