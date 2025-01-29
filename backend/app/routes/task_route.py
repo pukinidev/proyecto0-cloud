@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.schemas.user_schema import UserSchema
 from app.services.auth_service import get_current_active_user
-from app.services.task_service import create, get_tasks_by_user_id, get_by_id
+from app.services.task_service import create, get_tasks_by_user_id
 
 task = APIRouter()
 
