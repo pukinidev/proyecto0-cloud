@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from app.models import user
 from app.schemas.token_schema import Token
-from app.services.auth_service import create_access_token, get_current_active_user
+from app.services.auth_service import create_access_token, auth_dependency
 from app.services.user_service import authenticate_user, create_user, get_user
 from app.core.settings import settings
 from app.db.session import get_db
@@ -43,9 +43,9 @@ async def login(
     )
     return Token(access_token=access_token, token_type="bearer")
 
-@user.get("/profile", response_model=UserSchema)
+@user.get("/profile", response_model=UserDB)
 async def profile(
-    current_user: Annotated[UserSchema, Depends(get_current_active_user)],
+    current_user: auth_dependency
 ):
     return current_user
 
