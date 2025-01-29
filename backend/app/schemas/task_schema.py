@@ -19,5 +19,3 @@ class TaskSchema(BaseModel):
 class TaskDB(TaskSchema):
     id: int
 
-    class Config:
-        from_attributes = True
