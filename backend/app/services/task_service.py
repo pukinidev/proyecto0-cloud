@@ -1,11 +1,9 @@
 from sqlalchemy.orm import Session
-from app.schemas.task_schema import TaskSchema
+from app.schemas.task_schema import TaskSchema, TaskUpdateSchema
 from app.models.task import Task
-from app.services.user_service import get_user_id_by_username
 
 
-def create(db: Session, task: TaskSchema, username: str):
-    user_id = get_user_id_by_username(db, username)
+def create(db: Session, task: TaskSchema, user_id: int):
     db_task = Task(
         **task.model_dump(),
         user_id=user_id,
@@ -18,10 +16,13 @@ def create(db: Session, task: TaskSchema, username: str):
 def get_tasks_by_user_id(db: Session, user_id: int):
     return db.query(Task).filter(Task.user_id == user_id).all()
 
+def get_task_by_id(db: Session, task_id: int):
+    return db.query(Task).filter(Task.id == task_id).first()
 
-def update(db: Session, task_id: int, task: TaskSchema):
+def update(db: Session, task_id: int, task: TaskUpdateSchema):
     db_task = db.query(Task).filter(Task.id == task_id).first()
     db_task.title = task.title
+    db_task.status = task.status
     db_task.description = task.description
     db.commit()
     db.refresh(db_task)

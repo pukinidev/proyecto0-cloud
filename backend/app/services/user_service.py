@@ -1,6 +1,5 @@
 
 from typing import Annotated
-from fastapi import Depends
 from sqlalchemy.orm import Session
 from app.models.user import User
 from app.schemas.user_schema import UserSchema
@@ -24,10 +23,6 @@ def authenticate_user(db: Session, username: str, password: str):
     if not verify_password(password, user.password):
         return False
     return user
-
-def get_user_id_by_username(db: Session, username: str):
-    user = get_user(db, username)
-    return user.id
 
 def create_user(db: Session, user: UserSchema):
     hashed_password = get_password_hash(user.password)

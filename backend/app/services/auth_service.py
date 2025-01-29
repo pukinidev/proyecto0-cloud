@@ -1,3 +1,4 @@
+from app.schemas.user_schema import UserDB
 import jwt
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
@@ -42,8 +43,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
     return user
 
 async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)],
+    current_user: Annotated[UserDB, Depends(get_current_user)],
 ):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
+auth_dependency = Annotated[UserDB, Depends(get_current_active_user)]
