@@ -23,6 +23,7 @@ def update(db: Session, task_id: int, task: TaskUpdateSchema):
     db_task = db.query(Task).filter(Task.id == task_id).first()
     db_task.title = task.title
     db_task.status = task.status
+    db_task.description = task.description
     db.commit()
     db.refresh(db_task)
     return db_task

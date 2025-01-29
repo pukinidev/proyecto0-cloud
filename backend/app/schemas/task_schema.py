@@ -16,8 +16,8 @@ class TaskSchema(BaseModel):
         
 class TaskUpdateSchema(BaseModel):
     title: str
+    description: str
     status: Status
+    
 
-class TaskDB(TaskSchema):
-    id: int
 

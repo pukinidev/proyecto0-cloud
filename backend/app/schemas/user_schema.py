@@ -11,8 +11,7 @@ class UserSchema(BaseModel):
         
 class UserDB(UserSchema):
     id: int
-    class Config:
-        from_attributes = True
+    
         
 
 
