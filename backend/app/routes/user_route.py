@@ -10,12 +10,12 @@ from app.services.user_service import authenticate_user, create_user, get_user
 from app.core.settings import settings
 from app.db.session import get_db
 from sqlalchemy.orm import Session
-from app.schemas.user_schema import UserSchema
+from app.schemas.user_schema import UserSchema, UserDB
 
 
 user = APIRouter()
 
-@user.post("/register", response_model=UserSchema)
+@user.post("/register", response_model=UserDB)
 async def register(user: UserSchema, db: Session = Depends(get_db)):
     if get_user(db, user.username):
         raise HTTPException(
