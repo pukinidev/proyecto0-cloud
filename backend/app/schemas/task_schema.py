@@ -16,15 +16,8 @@ class TaskSchema(BaseModel):
         from_attributes = True
 
 
-class TaskSchemaResponse(BaseModel):
+class TaskDB(TaskSchema):
     id: int
-    title: str
-    description: str
-    creation_date: datetime
-    finish_date: datetime
-    status: Status
-    category_id: int
-    user_id: int
 
     class Config:
         from_attributes = True

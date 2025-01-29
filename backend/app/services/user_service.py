@@ -25,10 +25,6 @@ def authenticate_user(db: Session, username: str, password: str):
         return False
     return user
 
-def get_user_id_by_username(db: Session, username: str):
-    user = get_user(db, username)
-    return user.id
-
 def create_user(db: Session, user: UserSchema):
     hashed_password = get_password_hash(user.password)
     db_user = User(username=user.username, password=hashed_password)
