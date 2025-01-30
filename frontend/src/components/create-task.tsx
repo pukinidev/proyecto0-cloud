@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SelectCategory } from "./category-select";
 import { DatePicker } from "./date-picker";
 import { SelectStatus } from "./status-select";
+import { Plus } from "lucide-react";
 
 interface TaskData {
   title: string;
@@ -23,13 +24,11 @@ interface TaskData {
   finishDate: Date | undefined;
 }
 
-
 interface FormRowProps {
   label: string;
   id: string;
   children: React.ReactNode;
 }
-
 
 export function TaskCreate() {
   const [taskData, setTaskData] = useState<TaskData>({
@@ -62,7 +61,9 @@ export function TaskCreate() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Task</Button>
+        <Button variant="create">
+          <Plus /> Task
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -112,7 +113,9 @@ export function TaskCreate() {
               />
             </FormRow>
 
-            <Button type="submit" onClick={handleSubmit}>Create</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Create
+            </Button>
           </div>
         </form>
       </DialogContent>

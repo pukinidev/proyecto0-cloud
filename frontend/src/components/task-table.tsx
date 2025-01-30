@@ -30,21 +30,17 @@ interface Category {
 }
 
 export function TaskTable() {
-
   const [tasks, setTasks] = useState<Task[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
-
   const fetchCategories = async () => {
     try {
-      const response = await api.get("/categories", 
-      {
+      const response = await api.get("/categories", {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }
-      );
+      });
       if (response.status === 200) {
         setCategories(response.data);
       }
@@ -53,17 +49,14 @@ export function TaskTable() {
     }
   };
 
-
   const fetchTasks = async () => {
     try {
-      const response = await api.get("/tasks", 
-      {
+      const response = await api.get("/tasks", {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }
-      );
+      });
       if (response.status === 200) {
         setTasks(response.data);
       }
@@ -74,18 +67,16 @@ export function TaskTable() {
 
   const getTaskName = (id: number) => {
     return categories.find((category) => category.id === id)?.name;
-  }
+  };
 
   const deleteTask = async (id: number) => {
     try {
-      const response = await api.delete(`/tasks/${id}`, 
-      {
+      const response = await api.delete(`/tasks/${id}`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }
-      );
+      });
       if (response.status === 200) {
         fetchTasks();
       }
@@ -104,35 +95,40 @@ export function TaskTable() {
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Title</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Category</TableHead>
-          <TableHead>Finish date</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {tasks.map((task) => (
-          <TableRow key={task.id}>
-            <TableCell className="font-medium">{task.title}</TableCell>
-            <TableCell>{task.status}</TableCell>
-            <TableCell>{getTaskName(task.category_id)}</TableCell>
-            <TableCell>{task.finish_date}</TableCell>
-            <TableCell>
-              <div className="flex space-x-2">
-                <Button variant="outline">View</Button>
-                <Button variant="outline"><Pencil /></Button>
-                <Button variant="destructive" onClick={
-                  () => deleteTask(task.id)
-                }><Trash2 /></Button>
-              </div>
-            </TableCell>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Title</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Finish date</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {tasks.map((task) => (
+            <TableRow key={task.id}>
+              <TableCell className="font-medium">{task.title}</TableCell>
+              <TableCell>{task.status}</TableCell>
+              <TableCell>{getTaskName(task.category_id)}</TableCell>
+              <TableCell>{task.finish_date}</TableCell>
+              <TableCell>
+                <div className="flex space-x-2">
+                  <Button variant="outline">View</Button>
+                  <Button variant="outline">
+                    <Pencil />
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deleteTask(task.id)}
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
   );
 }

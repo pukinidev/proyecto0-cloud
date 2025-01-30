@@ -8,6 +8,7 @@ import {
 import { ProfileAvatar } from "./profile-avatar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "./auth-provider";
+import { ModeToggle } from "./mode-toggle";
 
 export function ProfileCard() {
   const { setToken } = useAuth();
@@ -23,9 +24,11 @@ export function ProfileCard() {
           <CardTitle>Profile</CardTitle>
         </div>
         <div className="border-t-2 border-black-200">
-          <div className="flex mt-4 mb-4">
+          <div className="flex items-center justify-between mt-4 mb-4">
             <CardDescription>Details</CardDescription>
+            <ModeToggle />
           </div>
+
           <CardContent>
             <ProfileAvatar />
             <div className="flex flex-col items-center gap-4 mt-4">
