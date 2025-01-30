@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Task } from "@/types/task";
 import { Category } from "@/types/category";
+import status from "@/data/status";
 
 
 
@@ -39,6 +40,10 @@ export function TaskTable({ tasks, fetchTasks }: Readonly<TaskTableProps>) {
       console.error("Failed to fetch categories", error);
     }
   };
+
+  const getStatusCustomName = (statusName: string) => {
+      return status.find((state) => state.name === statusName)?.custom_name;
+  }
 
   
   const getTaskName = (id: number) => {
@@ -76,17 +81,15 @@ export function TaskTable({ tasks, fetchTasks }: Readonly<TaskTableProps>) {
             <TableHead>Title</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Category</TableHead>
-            <TableHead>Finish date</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="w-[200px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {tasks.map((task) => (
             <TableRow key={task.id}>
               <TableCell className="font-medium">{task.title}</TableCell>
-              <TableCell>{task.status}</TableCell>
+              <TableCell>{getStatusCustomName(task.status)}</TableCell>
               <TableCell>{getTaskName(task.category_id)}</TableCell>
-              <TableCell>{new Date(task.finish_date).toLocaleDateString()}</TableCell>
               <TableCell>
                 <div className="flex space-x-2">
                   <Button variant="outline">View</Button>

@@ -7,31 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import status from "@/data/status";
 
 interface SelectStatusProps {
   setStatus: (status: string) => void;
 }
 
-export function SelectStatus({setStatus}: Readonly<SelectStatusProps>) {
-  const status = [
-    {
-      id: 1,
-      name: "pending",
-    },
-    {
-      id: 2,
-      name: "in_progress",
-    },
-    {
-      id: 3,
-      name: "completed",
-    },
-    {
-      id: 4,
-      name: "done",
-    },
-  ];
-
+export function SelectStatus({ setStatus }: Readonly<SelectStatusProps>) {
   return (
     <Select onValueChange={(value) => setStatus(value)}>
       <SelectTrigger className="w-[180px]">
@@ -42,7 +24,7 @@ export function SelectStatus({setStatus}: Readonly<SelectStatusProps>) {
           <SelectLabel>Status</SelectLabel>
           {status.map((state) => (
             <SelectItem key={state.id} value={state.name}>
-              {state.name}
+              {state.custom_name}
             </SelectItem>
           ))}
         </SelectGroup>
