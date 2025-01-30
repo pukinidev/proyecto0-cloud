@@ -29,8 +29,13 @@ interface Category {
   description: string;
 }
 
-export function TaskTable() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+interface TaskTableProps {
+  tasks: Task[];
+  fetchTasks: () => void;
+}
+
+export function TaskTable({ tasks, fetchTasks }: Readonly<TaskTableProps>) {
+  
   const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
@@ -49,22 +54,7 @@ export function TaskTable() {
     }
   };
 
-  const fetchTasks = async () => {
-    try {
-      const response = await api.get("/tasks", {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      if (response.status === 200) {
-        setTasks(response.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch tasks", error);
-    }
-  };
-
+  
   const getTaskName = (id: number) => {
     return categories.find((category) => category.id === id)?.name;
   };
@@ -86,7 +76,6 @@ export function TaskTable() {
   };
 
   useEffect(() => {
-    fetchTasks();
     fetchCategories();
   }, []);
 

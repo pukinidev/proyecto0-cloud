@@ -9,8 +9,45 @@ import {
 import { TaskTable } from "./task-table";
 import { TaskCreate } from "./create-task";
 import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+  creation_date: string;
+  finish_date: string;
+  status: string;
+  category_id: number;
+  user_id: number;
+}
 
 export function TaskCard() {
+
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await api.get("/tasks", {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.status === 200) {
+        setTasks(response.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch tasks", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
   return (
     <Card className="w-[1050px] h-[750px]">
       <CardHeader>
@@ -27,11 +64,11 @@ export function TaskCard() {
                 <Plus />
                 Create Category
               </Button>
-              <TaskCreate />
+              <TaskCreate/>
             </div>
           </div>
           <TaskCardContent>
-            <TaskTable />
+            <TaskTable fetchTasks={fetchTasks} tasks={tasks} />
           </TaskCardContent>
         </div>
       </CardHeader>

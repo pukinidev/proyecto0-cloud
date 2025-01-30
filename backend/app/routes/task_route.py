@@ -13,11 +13,7 @@ task = APIRouter()
 @task.post("/")
 async def create_task(task: TaskSchema, current_user: auth_dependency, db: Session = Depends(get_db)):
     task = create(db, task, current_user.id)
-    return {
-        "message": "Task created successfully",
-        "task": task,
-        "user": current_user.username
-    }
+    return task
 
 
 @task.get("/")
