@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,13 +16,14 @@ import { SelectCategory } from "./category-select";
 import { DatePicker } from "./date-picker";
 import { SelectStatus } from "./status-select";
 import { Plus } from "lucide-react";
+import { api } from "@/lib/api";
 
 interface TaskData {
   title: string;
   description: string;
-  category: string;
+  category_id: number | string;
   status: string;
-  finishDate: Date | undefined;
+  finish_date: Date | undefined;
 }
 
 interface FormRowProps {
@@ -34,28 +36,52 @@ export function TaskCreate() {
   const [taskData, setTaskData] = useState<TaskData>({
     title: "",
     description: "",
-    category: "",
+    category_id: 0,
     status: "",
-    finishDate: undefined,
+    finish_date: undefined,
   });
 
   const handleChange = (
     field: keyof TaskData,
-    value: string | Date | undefined
+    value: string | Date | undefined | number
   ) => {
     setTaskData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const creationDate = new Date().toISOString();
-    const finishDate = taskData.finishDate?.toISOString();
-    console.log({
+    const formattedDate = taskData.finish_date?.toISOString();
+
+    const data = {
       ...taskData,
-      creationDate,
-      finishDate,
-    });
+      creation_date: creationDate,
+      finish_date: formattedDate,
+    };
+
+    console.log(data);
+
+    try {
+      const response = await api.post("/tasks", data, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.status === 201) {
+        console.log("Task created successfully");
+        setTaskData({
+          title: "",
+          description: "",
+          category_id: 0,
+          status: "",
+          finish_date: undefined,
+        });
+      }
+    } catch (error) {
+      console.error("Failed to create task", error);
+    }
   };
 
   return (
@@ -94,7 +120,9 @@ export function TaskCreate() {
 
             <FormRow label="Category" id="category">
               <SelectCategory
-                setCategory={(value: string) => handleChange("category", value)}
+                setCategory={(value: string) =>
+                  handleChange("category_id", Number(value))
+                }
               />
             </FormRow>
 
@@ -106,16 +134,16 @@ export function TaskCreate() {
 
             <FormRow label="Finish Date" id="finish-date">
               <DatePicker
-                date={taskData.finishDate}
+                date={taskData.finish_date}
                 setDate={(value: Date | undefined) =>
-                  handleChange("finishDate", value)
+                  handleChange("finish_date", value)
                 }
               />
             </FormRow>
 
-            <Button type="submit" onClick={handleSubmit}>
-              Create
-            </Button>
+            <DialogClose asChild>
+              <Button type="submit">Create</Button>
+            </DialogClose>
           </div>
         </form>
       </DialogContent>

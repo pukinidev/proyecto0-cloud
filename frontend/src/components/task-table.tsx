@@ -111,7 +111,7 @@ export function TaskTable() {
               <TableCell className="font-medium">{task.title}</TableCell>
               <TableCell>{task.status}</TableCell>
               <TableCell>{getTaskName(task.category_id)}</TableCell>
-              <TableCell>{task.finish_date}</TableCell>
+              <TableCell>{new Date(task.finish_date).toLocaleDateString()}</TableCell>
               <TableCell>
                 <div className="flex space-x-2">
                   <Button variant="outline">View</Button>
