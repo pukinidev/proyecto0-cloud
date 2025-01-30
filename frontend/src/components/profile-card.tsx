@@ -9,9 +9,44 @@ import { ProfileAvatar } from "./profile-avatar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "./auth-provider";
 import { ModeToggle } from "./mode-toggle";
+import { api } from "@/lib/api";
+import { useEffect, useState } from "react";
+
+interface Profile {
+  id: number;
+  username: string;
+  profile_picture: string;
+  disabled: boolean;
+}
 
 export function ProfileCard() {
   const { setToken } = useAuth();
+  const [profile, setProfile] = useState<Profile>({
+    id: 0,
+    username: "",
+    profile_picture: "",
+    disabled: false,
+  });
+
+  const fetchProfile = async () => {
+    try {
+      const response = await api.get("/users/profile", {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.status === 200) {
+        setProfile(response.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch profile", error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const logout = () => {
     setToken(null);
@@ -32,7 +67,7 @@ export function ProfileCard() {
           <CardContent>
             <ProfileAvatar />
             <div className="flex flex-col items-center gap-4 mt-4">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">{profile.username}</label>
               <Button variant="outline">Edit Profile Picture</Button>
               <Button variant="destructive" type="button" onClick={logout}>
                 Logout
