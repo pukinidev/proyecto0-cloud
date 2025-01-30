@@ -4,4 +4,9 @@ interface Category {
   description: string;
 }
 
-export type { Category };
+interface CategoryData {
+  name: string;
+  description: string;
+}
+
+export type { Category, CategoryData };

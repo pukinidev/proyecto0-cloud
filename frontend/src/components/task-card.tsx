@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   TaskCardContent,
@@ -8,10 +7,10 @@ import {
 } from "@/components/ui/card";
 import { TaskTable } from "./task-table";
 import { TaskCreate } from "./create-task";
-import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Task } from "@/types/task";
+import { CategoryCreate } from "./create-category";
 
 export function TaskCard() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -46,11 +45,7 @@ export function TaskCard() {
           <div className="flex mt-4 mb-4">
             <CardDescription>Create tasks with categories</CardDescription>
             <div className="ml-auto space-x-2">
-              <Button variant="outline">
-                {" "}
-                <Plus />
-                Create Category
-              </Button>
+              <CategoryCreate />
               <TaskCreate fetchTasks={fetchTasks} />
             </div>
           </div>
