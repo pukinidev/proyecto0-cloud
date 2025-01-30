@@ -1,8 +1,12 @@
-import { Home } from "./pages/home/home";
+import Routes from "./components/routes";
+import AuthProvider from "./components/auth-provider";
+
 
 function App() {
   return (
-    <Home />
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   );
 }
 
