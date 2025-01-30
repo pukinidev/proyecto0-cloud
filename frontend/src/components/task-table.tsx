@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { Button } from "./ui/button";
 
 const tasks = [
   {
@@ -25,10 +25,11 @@ export function TaskTable() {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead >Title</TableHead>
+          <TableHead>Title</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Category</TableHead>
           <TableHead>Finish date</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -38,6 +39,13 @@ export function TaskTable() {
             <TableCell>{task.status}</TableCell>
             <TableCell>{task.category}</TableCell>
             <TableCell>{task.finish_date}</TableCell>
+            <TableCell>
+              <div className="flex space-x-2">
+                <Button variant="outline">View</Button>
+                <Button variant="outline">Edit</Button>
+                <Button variant="outline">Delete</Button>
+              </div>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
