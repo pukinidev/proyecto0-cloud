@@ -12,7 +12,6 @@ import { TaskCreate } from "./create-task";
 
 export function TaskCard() {
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-4 md:p-4">
       <Card className="w-[1050px] h-[750px]">
         <CardHeader>
           <div className="flex justify-between mb-2">
@@ -33,6 +32,5 @@ export function TaskCard() {
           </div>
         </CardHeader>
       </Card>
-    </div>
   );
 }

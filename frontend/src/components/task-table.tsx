@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
+import { Pencil, Trash2 } from "lucide-react";
 
 const tasks = [
   {
@@ -42,8 +43,8 @@ export function TaskTable() {
             <TableCell>
               <div className="flex space-x-2">
                 <Button variant="outline">View</Button>
-                <Button variant="outline">Edit</Button>
-                <Button variant="outline">Delete</Button>
+                <Button variant="outline"><Pencil /></Button>
+                <Button variant="outline"><Trash2 /></Button>
               </div>
             </TableCell>
           </TableRow>

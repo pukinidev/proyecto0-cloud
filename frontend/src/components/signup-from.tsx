@@ -1,14 +1,15 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router";
 
 export function SignUpForm({
   className,
@@ -28,12 +29,7 @@ export function SignUpForm({
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  type="text"
-                  placeholder="Puki"
-                  required
-                />
+                <Input id="username" type="text" placeholder="Puki" required />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -46,14 +42,13 @@ export function SignUpForm({
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account? {" "}
-              <a href="#" className="underline underline-offset-4">
-                Login
-              </a>
+              Already have an account? <Link to="/login"
+              className="underline"
+              >Login</Link>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
