@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link, useNavigate } from "react-router";
+import { Link} from "react-router-dom";
 import { useState } from "react";
 
 export function LoginForm({
@@ -18,15 +18,43 @@ export function LoginForm({
 }: Readonly<React.ComponentPropsWithoutRef<"div">>) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
 
-    
+    e.preventDefault();
 
-    navigate("/")
+    if (!username || !password) {
+      return;
+    }
+
+    const formData = new URLSearchParams();
+
+    formData.append("username", username);
+    formData.append("password", password);
+
+    fetch("http://localhost:8000/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+      body: formData.toString(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error("Invalid credentials");
+      })
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data.access_token);
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -37,7 +65,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="username">Username</Label>
@@ -62,7 +90,7 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full" onClick={handleSubmit}>
+              <Button type="submit" className="w-full">
                 Login
               </Button>
             </div>
