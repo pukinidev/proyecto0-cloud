@@ -30,7 +30,7 @@ app.include_router(category_route.category,
 # Add CORS middleware
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost:5173",
 ]
 
 app.add_middleware(

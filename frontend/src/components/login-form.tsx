@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 
 export function LoginForm({
@@ -18,9 +18,13 @@ export function LoginForm({
 }: Readonly<React.ComponentPropsWithoutRef<"div">>) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
-    // handle login
+
+    
+
+    navigate("/")
   };
 
   return (

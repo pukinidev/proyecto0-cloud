@@ -46,7 +46,7 @@ export function SignUpForm({
                 <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
               <Button type="submit" className="w-full" onClick={handleSubmit}>
-                Login
+                SignUp
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
