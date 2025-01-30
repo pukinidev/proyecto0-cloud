@@ -32,7 +32,11 @@ interface FormRowProps {
   children: React.ReactNode;
 }
 
-export function TaskCreate() {
+interface TaskCreateProps {
+  fetchTasks: () => void;
+}
+
+export function TaskCreate({ fetchTasks }: Readonly<TaskCreateProps>) {
   const [taskData, setTaskData] = useState<TaskData>({
     title: "",
     description: "",
@@ -60,7 +64,6 @@ export function TaskCreate() {
       finish_date: formattedDate,
     };
 
-    console.log(data);
 
     try {
       const response = await api.post("/tasks", data, {
@@ -69,8 +72,8 @@ export function TaskCreate() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      if (response.status === 201) {
-        console.log("Task created successfully");
+      if (response.status === 200) {
+        fetchTasks();
         setTaskData({
           title: "",
           description: "",

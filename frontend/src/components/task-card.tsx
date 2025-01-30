@@ -24,8 +24,6 @@ interface Task {
 }
 
 export function TaskCard() {
-
-
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasks = async () => {
@@ -54,7 +52,6 @@ export function TaskCard() {
         <div className="flex items-center justify-between mb-2">
           <CardTitle>Tasks</CardTitle>
         </div>
-
         <div className="border-t-2 border-black-200">
           <div className="flex mt-4 mb-4">
             <CardDescription>Create tasks with categories</CardDescription>
@@ -64,7 +61,7 @@ export function TaskCard() {
                 <Plus />
                 Create Category
               </Button>
-              <TaskCreate/>
+              <TaskCreate fetchTasks={fetchTasks} />
             </div>
           </div>
           <TaskCardContent>
