@@ -6,8 +6,16 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { ProfileAvatar } from "./profile-avatar";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "./auth-provider";
 
 export function ProfileCard() {
+  const { setToken } = useAuth();
+
+  const logout = () => {
+    setToken(null);
+  };
+
   return (
     <Card className="w-[300px] h-[750px]">
       <CardHeader>
@@ -22,6 +30,9 @@ export function ProfileCard() {
             <ProfileAvatar />
             <div className="flex flex-col items-center gap-4 mt-4">
               <label htmlFor="username">Username</label>
+              <Button variant="outline" type="button" onClick={logout}>
+                Logout
+              </Button>
             </div>
           </CardContent>
         </div>

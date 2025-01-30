@@ -75,7 +75,6 @@ export function LoginForm({
                 <Input
                   id="username"
                   type="text"
-                  placeholder="Puki"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
