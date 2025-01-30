@@ -11,17 +11,7 @@ import { TaskCreate } from "./create-task";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
-
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  creation_date: string;
-  finish_date: string;
-  status: string;
-  category_id: number;
-  user_id: number;
-}
+import { Task } from "@/types/task";
 
 export function TaskCard() {
   const [tasks, setTasks] = useState<Task[]>([]);

@@ -17,14 +17,9 @@ import { DatePicker } from "./date-picker";
 import { SelectStatus } from "./status-select";
 import { Plus } from "lucide-react";
 import { api } from "@/lib/api";
+import { TaskData } from "@/types/task";
 
-interface TaskData {
-  title: string;
-  description: string;
-  category_id: number | string;
-  status: string;
-  finish_date: Date | undefined;
-}
+
 
 interface FormRowProps {
   label: string;

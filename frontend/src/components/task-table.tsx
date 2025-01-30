@@ -10,24 +10,10 @@ import { Button } from "./ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import { Task } from "@/types/task";
+import { Category } from "@/types/category";
 
 
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  creation_date: string;
-  finish_date: string;
-  status: string;
-  category_id: number;
-  user_id: number;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  description: string;
-}
 
 interface TaskTableProps {
   tasks: Task[];
