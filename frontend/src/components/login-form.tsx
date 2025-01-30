@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "./auth-provider";
 
 export function LoginForm({
   className,
@@ -18,9 +19,10 @@ export function LoginForm({
 }: Readonly<React.ComponentPropsWithoutRef<"div">>) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
-
     e.preventDefault();
 
     if (!username || !password) {
@@ -48,13 +50,14 @@ export function LoginForm({
       })
       .then((data) => {
         console.log(data);
-        localStorage.setItem("token", data.access_token);
-        window.location.href = "/";
+        setToken(data.access_token);
+        navigate("/", { replace: true });
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>

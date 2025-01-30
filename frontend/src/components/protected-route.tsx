@@ -8,8 +8,5 @@ export function ProtectedRoute() {
     return <Navigate to="/login" />;
   }
 
-  
-
-
   return <Outlet />;
 }
