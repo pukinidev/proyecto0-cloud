@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/select";
 
 
-export function SelectCategory() {
+interface SelectCategoryProps {
+  setCategory: (category: string) => void;
+}
+
+export function SelectCategory({ setCategory }: Readonly<SelectCategoryProps>) {
 
     
   // fetch categories from the API
@@ -26,7 +30,7 @@ export function SelectCategory() {
   ];
 
   return (
-    <Select>
+    <Select onValueChange={(value) => setCategory(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a category" />
       </SelectTrigger>

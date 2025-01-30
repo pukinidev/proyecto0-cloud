@@ -13,9 +13,30 @@ import { Textarea } from "@/components/ui/textarea";
 import { SelectCategory } from "./category-select";
 import { DatePicker } from "./date-picker";
 import { SelectStatus } from "./status-select";
-
+import { useState } from "react";
 
 export function TaskCreate() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
+  const [finishDate, setFinishDate] = useState<Date>();
+
+  const handleSubmit = () => {
+    // handle create task
+
+    const creation_date = new Date().toISOString();
+    
+
+    console.log({
+      title,
+      description,
+      category,
+      status,
+      creation_date,
+      finish_date: finishDate?.toISOString(),
+    });
+  };
 
   return (
     <Dialog>
@@ -32,36 +53,50 @@ export function TaskCreate() {
         <form>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+              <Label htmlFor="title" className="text-right">
                 Title
               </Label>
-              <Input id="name" className="col-span-3" />
+              <Input
+                id="title"
+                className="col-span-3"
+                required
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
+              <Label htmlFor="description" className="text-right">
                 Description
               </Label>
-              <Textarea id="description" className="col-span-3" />
+              <Textarea
+                id="description"
+                className="col-span-3"
+                required
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
+              <Label htmlFor="category" className="text-right">
                 Category
               </Label>
-              <SelectCategory />
+              <SelectCategory setCategory={setCategory} />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
+              <Label htmlFor="status" className="text-right">
                 Status
               </Label>
-              <SelectStatus />
+              <SelectStatus setStatus={setStatus} />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
+              <Label htmlFor="finish-date" className="text-right">
                 Finish date
               </Label>
-              <DatePicker />
+              <DatePicker date={finishDate} setDate={setFinishDate}/>
             </div>
-            <Button type="submit">Create</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Create
+            </Button>
           </div>
         </form>
       </DialogContent>

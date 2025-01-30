@@ -8,7 +8,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function SelectStatus() {
+interface SelectStatusProps {
+  setStatus: (status: string) => void;
+}
+
+export function SelectStatus({setStatus}: Readonly<SelectStatusProps>) {
   const status = [
     {
       id: 1,
@@ -29,7 +33,7 @@ export function SelectStatus() {
   ];
 
   return (
-    <Select>
+    <Select onValueChange={(value) => setStatus(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a task status" />
       </SelectTrigger>
