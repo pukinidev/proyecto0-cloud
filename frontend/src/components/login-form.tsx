@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "./auth-provider";
+import { api } from "@/lib/api";
 
 export function LoginForm({
   className,
@@ -22,40 +23,30 @@ export function LoginForm({
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!username || !password) {
-      return;
-    }
-
+    
     const formData = new URLSearchParams();
 
     formData.append("username", username);
     formData.append("password", password);
 
-    fetch("http://localhost:8000/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-      body: formData.toString(),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error("Invalid credentials");
-      })
-      .then((data) => {
-        console.log(data);
+    try {
+      const response = await api.post("/users/login", formData.toString(), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        const data = response.data;
         setToken(data.access_token);
         navigate("/", { replace: true });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      }
+    } catch (error) {
+      console.error("Invalid credentials", error);
+    }
   };
 
   return (

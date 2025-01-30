@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
+import { api } from "@/lib/api";
+import { useAuth } from "./auth-provider";
 
 export function SignUpForm({
   className,
@@ -18,9 +20,52 @@ export function SignUpForm({
 }: Readonly<React.ComponentPropsWithoutRef<"div">>) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    // handle signup
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const request_body = {
+      username: username,
+      password: password,
+      profile_picture: "default.jpg",
+      disabled: false,
+    };
+
+    try {
+      const response = await api.post("/users/register", request_body);
+
+      if (response.status === 200) {
+        handleLogin();
+      }
+    } catch (error) {
+      console.error("Failed to signup", error);
+    }
+  };
+
+  const handleLogin = async () => {
+    const formData = new URLSearchParams();
+
+    formData.append("username", username);
+    formData.append("password", password);
+
+    try {
+      const response = await api.post("/users/login", formData.toString(), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        const data = response.data;
+        setToken(data.access_token);
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      console.error("Invalid credentials", error);
+    }
   };
 
   return (
@@ -33,7 +78,7 @@ export function SignUpForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="username">Username</Label>
@@ -57,7 +102,7 @@ export function SignUpForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full" onClick={handleSubmit}>
+              <Button type="submit" className="w-full">
                 SignUp
               </Button>
             </div>
