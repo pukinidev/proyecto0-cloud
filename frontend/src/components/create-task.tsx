@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,28 +14,48 @@ import { Textarea } from "@/components/ui/textarea";
 import { SelectCategory } from "./category-select";
 import { DatePicker } from "./date-picker";
 import { SelectStatus } from "./status-select";
-import { useState } from "react";
+
+interface TaskData {
+  title: string;
+  description: string;
+  category: string;
+  status: string;
+  finishDate: Date | undefined;
+}
+
+
+interface FormRowProps {
+  label: string;
+  id: string;
+  children: React.ReactNode;
+}
+
 
 export function TaskCreate() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [status, setStatus] = useState("");
-  const [finishDate, setFinishDate] = useState<Date>();
+  const [taskData, setTaskData] = useState<TaskData>({
+    title: "",
+    description: "",
+    category: "",
+    status: "",
+    finishDate: undefined,
+  });
 
-  const handleSubmit = () => {
-    // handle create task
+  const handleChange = (
+    field: keyof TaskData,
+    value: string | Date | undefined
+  ) => {
+    setTaskData((prev) => ({ ...prev, [field]: value }));
+  };
 
-    const creation_date = new Date().toISOString();
-    
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
+    const creationDate = new Date().toISOString();
+    const finishDate = taskData.finishDate?.toISOString();
     console.log({
-      title,
-      description,
-      category,
-      status,
-      creation_date,
-      finish_date: finishDate?.toISOString(),
+      ...taskData,
+      creationDate,
+      finishDate,
     });
   };
 
@@ -45,61 +66,67 @@ export function TaskCreate() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create task</DialogTitle>
+          <DialogTitle>Create Task</DialogTitle>
           <DialogDescription>
-            Fill out the form below to create a new task
+            Fill out the form below to create a new task.
           </DialogDescription>
         </DialogHeader>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="title" className="text-right">
-                Title
-              </Label>
+            <FormRow label="Title" id="title">
               <Input
                 id="title"
-                className="col-span-3"
                 required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={taskData.title}
+                onChange={(e) => handleChange("title", e.target.value)}
               />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Description
-              </Label>
+            </FormRow>
+
+            <FormRow label="Description" id="description">
               <Textarea
                 id="description"
-                className="col-span-3"
                 required
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={taskData.description}
+                onChange={(e) => handleChange("description", e.target.value)}
               />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="category" className="text-right">
-                Category
-              </Label>
-              <SelectCategory setCategory={setCategory} />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="status" className="text-right">
-                Status
-              </Label>
-              <SelectStatus setStatus={setStatus} />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="finish-date" className="text-right">
-                Finish date
-              </Label>
-              <DatePicker date={finishDate} setDate={setFinishDate}/>
-            </div>
-            <Button type="submit" onClick={handleSubmit}>
-              Create
-            </Button>
+            </FormRow>
+
+            <FormRow label="Category" id="category">
+              <SelectCategory
+                setCategory={(value: string) => handleChange("category", value)}
+              />
+            </FormRow>
+
+            <FormRow label="Status" id="status">
+              <SelectStatus
+                setStatus={(value: string) => handleChange("status", value)}
+              />
+            </FormRow>
+
+            <FormRow label="Finish Date" id="finish-date">
+              <DatePicker
+                date={taskData.finishDate}
+                setDate={(value: Date | undefined) =>
+                  handleChange("finishDate", value)
+                }
+              />
+            </FormRow>
+
+            <Button type="submit" onClick={handleSubmit}>Create</Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function FormRow({ label, id, children }: Readonly<FormRowProps>) {
+  return (
+    <div className="grid grid-cols-4 items-center gap-4">
+      <Label htmlFor={id} className="text-right">
+        {label}
+      </Label>
+      <div className="col-span-3">{children}</div>
+    </div>
   );
 }
