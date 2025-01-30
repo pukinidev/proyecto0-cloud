@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { api } from "@/lib/api";
+import { Category } from "@/types/category";
 import { useEffect, useState } from "react";
 
 
@@ -15,11 +16,6 @@ interface SelectCategoryProps {
   setCategory: (category: string) => void;
 }
 
-interface Category {
-  id: number;
-  name: string;
-  description: string;
-}
 
 export function SelectCategory({ setCategory }: Readonly<SelectCategoryProps>) {
 
