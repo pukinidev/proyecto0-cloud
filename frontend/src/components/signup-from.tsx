@@ -10,11 +10,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router";
+import { useState } from "react";
 
 export function SignUpForm({
   className,
   ...props
 }: Readonly<React.ComponentPropsWithoutRef<"div">>) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {
+    // handle signup
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -29,22 +37,23 @@ export function SignUpForm({
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="username">Username</Label>
-                <Input id="username" type="text" placeholder="Puki" required />
+                <Input id="username" type="text" placeholder="Puki" required value={username} onChange={(e) => setUsername(e.target.value)} />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" onClick={handleSubmit}>
                 Login
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account? <Link to="/login"
-              className="underline"
-              >Login</Link>
+              Already have an account?{" "}
+              <Link to="/login" className="underline">
+                Login
+              </Link>
             </div>
           </form>
         </CardContent>
