@@ -6,8 +6,8 @@ from datetime import datetime
 
 class Status(enum.Enum):
     pending = "pending"
-    done = "done"
-    in_progress = "in_progress"
+    not_started = "not started"
+    in_progress = "in progress"
     completed = "completed"
 
 class Task(ModelBase):
