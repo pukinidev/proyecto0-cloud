@@ -6,3 +6,6 @@ class CategorySchema(BaseModel):
     
     class Config:
         from_attributes = True
+        
+class CategoryResponseSchema(CategorySchema):
+    id: int

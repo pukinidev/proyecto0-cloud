@@ -19,5 +19,9 @@ class TaskUpdateSchema(BaseModel):
     description: str
     status: Status
     
+class TaskResponseSchema(TaskSchema):
+    user_id: int
+    id: int
+    
 
 
