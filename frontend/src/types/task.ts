@@ -17,4 +17,10 @@ interface TaskData {
   finish_date: Date | undefined;
 }
 
-export type { Task, TaskData };
+interface UpdateTask {
+  title: string;
+  description: string;
+  status: string;
+}
+
+export type { Task, TaskData, UpdateTask };

@@ -7,10 +7,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { api } from "@/lib/api";
 import { Task } from "@/types/task";
 import status from "@/data/status";
+import { UpdateTasks } from "./update-task";
 
 interface TaskTableProps {
   tasks: Task[];
@@ -59,9 +60,7 @@ export function TaskTable({ tasks, fetchTasks }: Readonly<TaskTableProps>) {
             <TableCell>
               <div className="flex space-x-2">
                 <Button variant="outline">View</Button>
-                <Button variant="outline">
-                  <Pencil />
-                </Button>
+                <UpdateTasks fetchTasks={fetchTasks} task={task} />
                 <Button
                   variant="destructive"
                   onClick={() => deleteTask(task.id)}

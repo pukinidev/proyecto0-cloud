@@ -6,7 +6,7 @@ const status = [
   },
   {
     id: 2,
-    name: "in_progress",
+    name: "in progress",
     custom_name: "In Progress 🔵",
   },
   {
@@ -16,8 +16,8 @@ const status = [
   },
   {
     id: 4,
-    name: "done",
-    custom_name: "Done 🟢",
+    name: "not started",
+    custom_name: "Not Started 🔴",
   },
 ];
 
