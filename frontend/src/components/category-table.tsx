@@ -61,7 +61,7 @@ export function CategoryTable({ data, fetchCategories }: Readonly<CategoryTableP
         },
       });
       if (response.status === 200) {
-        fetchCategories(); // Refresh category list
+        fetchCategories(); 
       }
     } catch (error) {
       console.error("Failed to delete category", error);
