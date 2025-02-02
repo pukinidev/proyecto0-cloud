@@ -85,7 +85,7 @@ export function TaskCreate({ fetchTasks }: Readonly<TaskCreateProps>) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="create">
+        <Button variant="outline">
           <Plus /> Task
         </Button>
       </DialogTrigger>

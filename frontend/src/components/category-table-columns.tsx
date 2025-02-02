@@ -17,7 +17,7 @@ interface CategoryColumnsProps {
 export const getColumns = ({ onDeleteCategory }: CategoryColumnsProps): ColumnDef<Category>[] => [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Category",
   },
   {
     id: "actions",
