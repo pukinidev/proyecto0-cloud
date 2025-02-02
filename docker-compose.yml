@@ -2,12 +2,12 @@ services:
   backend:
     container_name: backend
     build:
-      context: .
+      context: backend
       dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
     depends_on:
       - database
   
@@ -22,6 +22,17 @@ services:
       - "5432:5432"
     volumes:
       - data:/var/lib/postgresql/data
+
+
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
 
 volumes:
   data:

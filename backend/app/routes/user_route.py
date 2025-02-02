@@ -49,12 +49,3 @@ async def profile(
 ):
     return current_user
 
-@user.post("/logout")
-async def logout():
-    return {"message": "User logged out successfully"}
-
-@user.post("/refresh-token")
-async def refresh_token():
-    return {"message": "Token refreshed successfully"}
-
-

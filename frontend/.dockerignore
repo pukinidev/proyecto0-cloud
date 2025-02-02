@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+dist
+.vite
+.cache
+
+.DS_Store
+Thumbs.db
+
+.env
+.env.local
