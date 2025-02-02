@@ -68,7 +68,6 @@ export function ProfileCard() {
             <ProfileAvatar />
             <div className="flex flex-col items-center gap-4 mt-4">
               <label htmlFor="username">{profile.username}</label>
-              <Button variant="outline">Edit Profile Picture</Button>
               <Button variant="destructive" type="button" onClick={logout}>
                 Logout
               </Button>

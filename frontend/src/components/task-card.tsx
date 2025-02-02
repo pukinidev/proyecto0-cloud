@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Task } from "@/types/task";
 import { CategoryCreate } from "./create-category";
+import { ShowCategory } from "./show-category";
 
 export function TaskCard() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -45,6 +46,7 @@ export function TaskCard() {
           <div className="flex mt-4 mb-4">
             <CardDescription>Create tasks with categories</CardDescription>
             <div className="ml-auto space-x-2">
+              <ShowCategory />
               <CategoryCreate />
               <TaskCreate fetchTasks={fetchTasks} />
             </div>
