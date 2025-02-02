@@ -12,6 +12,7 @@ import { api } from "@/lib/api";
 import { Task } from "@/types/task";
 import status from "@/data/status";
 import { UpdateTasks } from "./update-task";
+import { ShowTasks } from "./show-task";
 
 interface TaskTableProps {
   tasks: Task[];
@@ -59,7 +60,7 @@ export function TaskTable({ tasks, fetchTasks }: Readonly<TaskTableProps>) {
             <TableCell>{getStatusCustomName(task.status)}</TableCell>
             <TableCell>
               <div className="flex space-x-2">
-                <Button variant="outline">View</Button>
+                <ShowTasks task={task} />
                 <UpdateTasks fetchTasks={fetchTasks} task={task} />
                 <Button
                   variant="destructive"
