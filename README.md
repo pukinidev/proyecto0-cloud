@@ -21,11 +21,10 @@ Para realizar el despliegue en docker, se configuro un docker compose que desple
 
 ### Descripción de servicios de docker
 
-* **Backend** : Servicio que ejecuta la lógica de la aplicación. Se construye desde el código fuente en la carpeta `backend` y expone el puerto  **8000** . Depende de la base de datos para funcionar. Para este servicio se configuro un dockerfile. Este **Dockerfile** configura un contenedor ligero para una aplicación en **Python 3.12** con **FastAPI** y  **Uvicorn**.
-  ![ALT](image/dockerfile_backend.png)
+* **Backend** : Servicio que ejecuta la lógica de la aplicación. Se construye desde el código fuente en la carpeta `backend` y expone el puerto  **8000** . Depende de la base de datos para funcionar. Para este servicio se configuro un dockerfile. Este **Dockerfile** configura un contenedor ligero para una aplicación en **Python 3.12** con **FastAPI** y  **Uvicorn**.![ALT](image/dockerfile_backend.png)
 * **Database** : Servicio de base de datos PostgreSQL que almacena la información de la aplicación. Usa credenciales predefinidas y persiste los datos en un volumen.
 * **Frontend** : Servicio que gestiona la interfaz de usuario. Se construye desde la carpeta `frontend`, mantiene sus dependencias en un volumen y expone el puerto **3000** para acceso desde el navegador. Para este servicio se configuro un dockerfile. Este **Dockerfile** configura un contenedor ligero para una aplicación  **Node.js 22.3.0.**
-  ![ALT](image/dockerfile_frontend.png)
+  ![ALT]()
 
 ## Como ejecutar los servicios?
 
