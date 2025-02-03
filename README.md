@@ -35,8 +35,8 @@ docker compose up -d
 
 ## Información sobre los servicios
 
-* Para acceder al frontend, dirijase a la siguiente dirección: **localhost:3000**
-* Para acceder al backend, dirijase a la siguiente dirección: **localhost:8000**
+* Para acceder al frontend, abre tu navegador y visita  **localhost:3000**.
+* Para acceder al backend, abre tu navegador y visita  **localhost:8000**. Al ingresar, serás redirigido automáticamente a la documentación generada con  **Swagger** .
 
 ## Como detener los servicios?
 
